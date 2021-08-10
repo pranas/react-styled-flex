@@ -1,1 +1,1 @@
-module.exports = require('./package.json');
+export default require('./package.json');

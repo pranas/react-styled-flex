@@ -1,10 +1,14 @@
-import { ReactNode, CSSProperties } from 'react';
+import * as styled_components from 'styled-components';
+import { CSSProperties, ReactNode } from 'react';
+
+declare const FlexGapSupportedClassName = "flex-gap-supported";
+declare const FlexGapNotSupportedClassName = "flex-gap-not-supported";
 
 type Never<T> = {
     [P in keyof T] ?: never;
 };
 
-export interface BoxProps {
+interface BoxProps {
     sizing?: CSSProperties['boxSizing'],
     position?: CSSProperties['position'],
     height?: CSSProperties['height'],
@@ -37,11 +41,11 @@ export interface BoxProps {
     children?: ReactNode,
 }
 
-export interface FlexBoxProps extends FlexBoxUniqueProps {
+interface FlexBoxProps extends FlexBoxUniqueProps {
     children?: ReactNode,
 }
 
-export interface FlexBoxUniqueProps {
+interface FlexBoxUniqueProps {
     inline?: boolean,
     wrap?: boolean,
     wrapReverse?: boolean,
@@ -57,7 +61,7 @@ export interface FlexBoxUniqueProps {
     rowGap?: CSSProperties['rowGap'],
 }
 
-export interface FlexItemBaseProps {
+interface FlexItemBaseProps {
     box?: boolean,
     order?: CSSProperties['order'],
     grow?: CSSProperties['flexGrow'],
@@ -69,6 +73,12 @@ export interface FlexItemBaseProps {
     children?: ReactNode,
 }
 
-export type FlexItemProps =
+type FlexItemProps =
     | FlexItemBaseProps & { box: true} & FlexBoxProps
     | FlexItemBaseProps & { box?: false } & Never<FlexBoxUniqueProps>;
+
+declare const Box: styled_components.StyledComponent<"div", any, BoxProps, never>;
+declare const FlexBox: styled_components.StyledComponent<"div", any, BoxProps & FlexBoxProps, never>;
+declare const FlexItem: styled_components.StyledComponent<"div", any, BoxProps & FlexItemProps, never>;
+
+export { Box, BoxProps, FlexBox, FlexBoxProps, FlexGapNotSupportedClassName, FlexGapSupportedClassName, FlexItem, FlexItemProps };
